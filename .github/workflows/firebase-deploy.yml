@@ -13,16 +13,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./Frontend
 
       - name: Build
         run: npm run build
+        working-directory: ./Frontend
+
+      - name: Move build to root for Firebase Hosting
+        run: |
+          rm -rf public
+          mv Frontend/dist public
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
