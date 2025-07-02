@@ -3,31 +3,30 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main  # Runs on every push to main branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone Repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Build Project
+      - name: Build
         run: npm run build
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseToken: "${{ secrets.FIREBASE_TOKEN }}"
-          channelId: live
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: chat-app-45516
