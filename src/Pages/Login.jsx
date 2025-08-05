@@ -1,4 +1,4 @@
-import React, { useState ,useContext,} from 'react';
+import React, { useState, useContext } from 'react';
 import assets from '../assets/assets';
 import { signup, login, resetPassword } from '../config/firebase';
 import { toast } from 'react-toastify';
@@ -10,8 +10,6 @@ const STATES = {
   LOGIN: 'Login',
 };
 
-
-
 const Login = () => {
   const [currState, setCurrState] = useState(STATES.SIGN_UP);
   const [username, setUsername] = useState('');
@@ -19,20 +17,19 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  
-const { loadUserData } = useContext(AppContext);
-const navigate = useNavigate();
+  const { loadUserData } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const isSignup = currState === STATES.SIGN_UP;
 
- const onSubmitHandler = async (e) => {
-  e.preventDefault();
-  if (currState === "Sign Up") {
-    await signup(username, email, password); // You can enhance this too
-  } else {
-    await login(email, password, loadUserData, navigate); // ✅ Important change
-  }
-};
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      await signup(username, email, password);
+    } else {
+      await login(email, password, loadUserData, navigate);
+    }
+  };
 
   const handleResetPassword = () => {
     if (!email) {
@@ -43,68 +40,80 @@ const navigate = useNavigate();
   };
 
   return (
-    <div className='w-screen h-screen bg-cover bg-customBg'>
-      <div className='flex flex-col items-center m-auto md:flex md:flex-row md:justify-evenly md:items-center md:min-h-screen'>
-        <div className='flex justify-center my-10'>
-          <img className='w-[max(20vw,200px)]' width="200"
-  height="200" src={assets.logo_bigW} alt="Logo" />
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#3b82f6] flex items-center justify-center px-4">
+      <div className="flex flex-col items-center justify-center w-full max-w-6xl gap-10 md:gap-32 md:flex-row">
+        
+        <div className="flex flex-col items-center text-center md:text-left">
+          <img
+            className="w-[180px] md:w-full mb-4"
+            src={assets.logo_icon}
+            alt="Logo"
+          />
+          <h1 className="text-3xl font-semibold text-white md:text-6xl">ChitChat</h1>
         </div>
 
-        <form onSubmit={onSubmitHandler} className='flex flex-col gap-5 bg-white border rounded-lg w-80'>
-          <h1 className='w-11/12 mx-auto mt-5 text-3xl font-semibold'>{currState}</h1>
+       
+        <form
+          onSubmit={onSubmitHandler}
+          className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-6 w-full sm:w-[90%] md:w-[400px] flex flex-col gap-4 text-white shadow-lg"
+        >
+          <h2 className="text-2xl font-semibold text-center">{currState}</h2>
 
           {isSignup && (
             <input
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              value={username}
-              className='w-11/12 px-3 m-auto border rounded-lg border-borderColor h-11 outline-customBlue'
-              type='text'
-              placeholder='Username'
+              className="w-full p-2 rounded outline-none bg-zinc-800 focus:ring-2 focus:ring-blue-500"
+              placeholder="Username"
+              type="text"
             />
           )}
 
           <input
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            value={email}
-            className='w-11/12 px-3 m-auto border rounded-lg border-borderColor h-11 outline-customBlue'
-            type='email'
-            placeholder='Email address'
+            className="w-full p-2 rounded outline-none bg-zinc-800 focus:ring-2 focus:ring-blue-500"
+            placeholder="Email address"
+            type="email"
           />
 
           <input
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            value={password}
-            className='w-11/12 px-3 m-auto border rounded-lg border-borderColor h-11 outline-customBlue'
-            type='password'
-            placeholder='Password'
+            className="w-full p-2 rounded outline-none bg-zinc-800 focus:ring-2 focus:ring-blue-500"
+            placeholder="Password"
+            type="password"
           />
 
-          <button className='w-11/12 m-auto text-xl text-white border rounded-md h-11 bg-customBlue'>
-            {isSignup ? 'Create account' : 'Login'}
+          <button className="w-full py-2 text-lg font-medium transition bg-blue-600 rounded hover:bg-blue-700">
+            {isSignup ? 'Create Account' : 'Login'}
           </button>
 
           {isSignup && (
-            <div className='flex w-11/12 gap-2 mx-auto'>
+            <label className="flex items-center gap-2 text-sm">
               <input
-                type='checkbox'
-                className='cursor-pointer'
+                type="checkbox"
                 checked={agreedToTerms}
                 onChange={() => setAgreedToTerms(!agreedToTerms)}
+                className="accent-blue-600"
               />
-              <p className='text-sm text-customGrey'>Agree to the terms of use & privacy policy</p>
-            </div>
+              <span>
+                Agree to the{' '}
+                <span className="underline cursor-pointer">Terms & Privacy Policy</span>
+              </span>
+            </label>
           )}
 
-          <div className='w-11/12 mx-auto mb-5 text-sm text-customGrey'>
+          <div className="mt-2 space-y-1 text-sm text-gray-300">
             {isSignup ? (
               <p>
                 Already have an account?{' '}
                 <span
                   onClick={() => setCurrState(STATES.LOGIN)}
-                  className='font-semibold cursor-pointer text-customBlue'
+                  className="font-semibold text-blue-400 cursor-pointer hover:underline"
                 >
                   Login here
                 </span>
@@ -115,7 +124,7 @@ const navigate = useNavigate();
                   Create an account?{' '}
                   <span
                     onClick={() => setCurrState(STATES.SIGN_UP)}
-                    className='font-semibold cursor-pointer text-customBlue'
+                    className="font-semibold text-blue-400 cursor-pointer hover:underline"
                   >
                     Sign Up
                   </span>
@@ -124,7 +133,7 @@ const navigate = useNavigate();
                   Forgot Password?{' '}
                   <span
                     onClick={handleResetPassword}
-                    className='font-semibold cursor-pointer text-customBlue'
+                    className="font-semibold text-blue-400 cursor-pointer hover:underline"
                   >
                     Reset here
                   </span>

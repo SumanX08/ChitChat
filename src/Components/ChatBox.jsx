@@ -9,14 +9,11 @@ import upload from '../storage/upload';
 
 const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
   const { userData, messageId, setMessages, friends ,selectedFriend,selectedGroup,setIsChatOpen,isChatOpen,isInfoOpen,setIsInfoOpen } = useContext(AppContext);
-  const inputRef = useRef(null);
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [scheduleModal, setScheduleModal] = useState(false);
-  const [groupInfo, setGroupInfo] = useState(false);
   const [scheduledText, setScheduledText] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
-  const [scheduledMessages, setScheduledMessages] = useState([]);
   const [groupMembers, setGroupMembers] = useState([]); // State to hold selectedFriend member usernames
       const [input, setInput] = useState('');
   
@@ -25,38 +22,6 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
 
 
 
-  const fetchFriendsNotInGroup = async () => {
-    try {
-      console.log("Friends:", friends);
-      console.log("Group Members:", groupMembers);
-
-      // Extract usernames from groupMembers
-      const groupMemberUsernames = groupMembers.map(member => member.username);
-
-      // Filter friends who are NOT in groupMembers
-      const friendsNotInGroup = friends.filter(friend =>
-        !groupMemberUsernames.includes(friend.friend.username) // Adjust according to the matching field
-      );
-
-      console.log("Friends Not In Group:", friendsNotInGroup);
-      setFilteredFriends(friendsNotInGroup); // Update state with the filtered list
-    } catch (error) {
-      console.error('Error filtering friends:', error);
-    }
-  };
-
-  // Function to edit the selectedFriend name
-  
-
-
-  // Log friend data for debugging
-  useEffect(() => {
-    if (selectedFriend && selectedFriend.friend.id) {
-      console.log("Friend data is available:", selectedFriend);
-    } else {
-      console.log("Friend or friend ID not available.");
-    }
-  }, [selectedFriend]); 
 
   // Fetch selectedFriend members' usernames when the selectedFriend is available
   useEffect(() => {
@@ -68,13 +33,13 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
     if (memberIds.length === 0) return;
 
     const usersRef = collection(db, "users");
-    const memberDocs = await getDocs(usersRef); // 🔁 1 fetch for all users
+    const memberDocs = await getDocs(usersRef); 
 
     const members = [];
 
     memberDocs.forEach((docSnap) => {
       const data = docSnap.data();
-      if (memberIds.includes(data.id)) { // ✅ filter in memory
+      if (memberIds.includes(data.id)) { 
         members.push({
           username: data.username,
           avatar: data.avatar,
@@ -108,7 +73,7 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
 
           if (lastSeen) {
             const timeDifference = currentTime - lastSeen.getTime();
-            const onlineStatus = timeDifference < 30000; // 30 seconds threshold
+            const onlineStatus = timeDifference < 30000; 
             setIsFriendOnline(onlineStatus);
           }
         }
@@ -143,7 +108,6 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
 
       await batch.commit(); 
       setMessages([]); 
-      console.log("Chat cleared for user:", userId);
     } catch (error) {
       console.error("Error clearing chat:", error);
     }
@@ -155,7 +119,6 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
   // Toggle menu visibility
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);
-    console.log("Menu toggle clicked. Current state:", menuVisible);
   };
 
 
@@ -225,7 +188,6 @@ const handleScheduleMessage = async () => {
     setScheduleModal(false);
     setScheduledText('');
     setScheduledTime('');
-    console.log("Message scheduled successfully.");
   } catch (error) {
     console.error("Error scheduling message:", error);
     alert("Failed to schedule the message. Please try again.");

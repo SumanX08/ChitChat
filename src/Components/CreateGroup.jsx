@@ -30,7 +30,7 @@ const CreateGroup = ({ onClose, friends, fetchGroup }) => {
       members: [...selectedMembers, currentUser],
       lastMessage: '',
       updatedAt: serverTimestamp(),
-      groupImage: '', // Temporary empty image
+      groupImage: '', 
       description,
       createdBy: currentUser,
     };
@@ -53,7 +53,7 @@ const CreateGroup = ({ onClose, friends, fetchGroup }) => {
 
       alert('Group created successfully!');
       onClose(); // Close modal immediately
-      fetchGroup(); // Update UI for creator
+      fetchGroup(); 
     } catch (error) {
       console.error('Error creating group:', error);
       alert('Error creating group. Please try again.');

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef, useMemo } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { AppContext } from '../context/AppContext';
 import assets from '../assets/assets';
 import DeleteOptions from './DeleteOptions';
@@ -13,16 +13,15 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
-const Messages = () => {
+const Messages = ({ selectedFriend }) => {
   const [showDeleteOptions, setShowDeleteOptions] = useState(null);
   const [now, setNow] = useState(Date.now());
-  const [allMessages, setAllMessages] = useState(new Map()); // ← internal source of truth
+  const [allMessages, setAllMessages] = useState(new Map());
 
   const {
-    messages,
     userData,
+    messages,
     setMessages,
-    selectedFriend,
     selectedGroup,
   } = useContext(AppContext);
 
@@ -34,7 +33,7 @@ const Messages = () => {
       return [userData.id, selectedFriend.friend.id].sort().join('_');
     }
     return null;
-  }, [isGroup, userData?.id, selectedFriend]);
+  }, [isGroup, userData?.id, selectedFriend?.friend?.id]);
 
   const chatPath = useMemo(() => {
     return chatId ? collection(db, isGroup ? 'groups' : 'chats', chatId, 'messages') : null;
@@ -98,33 +97,39 @@ const Messages = () => {
     }
   };
 
+  // Live message listener
   useEffect(() => {
-    if (!chatPath || !userData?.id) return;
+  if (!chatPath || !userData?.id) return;
 
-    const unsubscribe = onSnapshot(query(chatPath, orderBy('timestamp', 'asc')), (snapshot) => {
-      const currentTime = Date.now();
-      const updates = new Map();
+  
 
-      snapshot.forEach((doc) => {
-        const msg = { id: doc.id, ...doc.data() };
-        const isDeletedForMe = msg[fieldToCheck]?.includes(userData.id);
-        const isScheduled = msg.scheduled && msg.scheduledTime?.toMillis() > currentTime;
+  const unsubscribe = onSnapshot(query(chatPath, orderBy('timestamp', 'asc')), (snapshot) => {
+    const currentTime = Date.now();
+    const updates = new Map();
 
-        if (!isScheduled && (!isDeletedForMe || msg.isDeleted)) {
-          updates.set(msg.id, msg);
-        }
-      });
+    snapshot.forEach((doc) => {
+      const msg = { id: doc.id, ...doc.data() };
+      const isDeletedForMe = msg[fieldToCheck]?.includes(userData.id);
+      const isScheduled = msg.scheduled && msg.scheduledTime?.toMillis() > currentTime;
 
-      setAllMessages((prev) => {
-        const newMap = new Map(prev);
-        updates.forEach((msg, id) => newMap.set(id, msg));
-        return newMap;
-      });
+      if (!isScheduled && (!isDeletedForMe || msg.isDeleted)) {
+        updates.set(msg.id, msg);
+      }
     });
 
-    return () => unsubscribe();
-  }, [chatPath, userData?.id]);
+    setAllMessages(() => {
+      const newMap = new Map();
+      updates.forEach((msg, id) => newMap.set(id, msg));
+      return newMap;
+    });
+  });
 
+  return () => {
+    unsubscribe();
+  };
+}, [chatPath, userData?.id, selectedFriend?.friend?.id, selectedGroup?.id]); 
+
+  //  Scheduled message listener
   useEffect(() => {
     if (!scheduledPath || !userData?.id) return;
 
@@ -137,7 +142,7 @@ const Messages = () => {
         const shouldShow = msg.scheduledTime?.toMillis() <= currentTime;
 
         if (shouldShow) {
-          updates.set(msg.id, { ...msg, timestamp: msg.scheduledTime }); // Use scheduled time for display
+          updates.set(msg.id, { ...msg, timestamp: msg.scheduledTime });
         }
       });
 

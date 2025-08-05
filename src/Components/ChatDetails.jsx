@@ -18,7 +18,7 @@ const ChatDetails = ({ friend, isFriendOnline }) => {
   const [activeTab, setActiveTab] = useState('Images');
   const [groupInfo, setGroupInfo] = useState(false);
 
-  // ⬇️ All hooks declared at the top level
+  
   const { images, videos, documents } = useMemo(() => {
     const imgs = [], vids = [], docs = [];
 
@@ -52,6 +52,7 @@ const ChatDetails = ({ friend, isFriendOnline }) => {
         </div>
       );
     }
+    
 
     if (activeTab === 'Videos') {
       return (
@@ -97,7 +98,7 @@ const ChatDetails = ({ friend, isFriendOnline }) => {
     }
   };
 
-  // ⛔️ Avoid conditional return before hooks
+  // Avoid conditional return before hooks
   const shouldRenderContent = !!friend || !!selectedGroup;
 
   return (

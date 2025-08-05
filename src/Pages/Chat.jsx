@@ -30,8 +30,8 @@ const Chat = ({ setShowNotifications }) => {
   }), [isFriendOnline, selectedGroup, selectedFriend, setIsChatOpen]);
 
   return (
-    <div className="grid min-h-screen bg-[linear-gradient(to_bottom_right,_#596aff,_#383699)] place-items-center">
-      <div className="w-[95%] h-[75vh]  relative max-w-[1000px] lg:grid lg:grid-cols-custom-layout">
+    <div className="grid min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#3b82f6] place-items-center">
+      <div className="w-[95%] h-[75vh]  relative max-w-[1000px] lg:grid lg:grid-cols-custom-layout rounded-lg">
         <Chats
           setIsChatOpen={setIsChatOpen}
           setShowNotifications={setShowNotifications}

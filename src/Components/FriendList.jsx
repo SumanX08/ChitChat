@@ -48,9 +48,13 @@ const FriendsList = () => {
         }
 
         setIsChatOpen(true);
-        setSelectedFriend(friend);
-        setSelectedGroup(null);
+setSelectedFriend({
+  friend: friend.friend,
+  lastMessage: friend.lastMessage,
+  isUnread: friend.isUnread
+});        setSelectedGroup(null);
         setMessageId(chatDocRef.id);
+        
       } catch (error) {
         console.error('Error opening chat:', error);
       }

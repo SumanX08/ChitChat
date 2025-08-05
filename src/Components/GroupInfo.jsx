@@ -6,7 +6,7 @@ import assets from '../assets/assets';
 import upload from '../storage/upload';
 
 function GroupInfo({ groupInfo, setGroupInfo }) {
-  const { selectedGroup, setGroup, friends, membersInfo, loadGroupUsers ,selectedFriend} = useContext(AppContext);
+  const { selectedGroup, setGroup, friends, membersInfo, loadGroupUsers } = useContext(AppContext);
 
   const [groupSettings, setGroupSettings] = useState(false);
   const [editingGroupName, setEditingGroupName] = useState(false);
@@ -17,7 +17,7 @@ function GroupInfo({ groupInfo, setGroupInfo }) {
   const [filteredFriends, setFilteredFriends] = useState([]);
   const [newGroupName, setNewGroupName] = useState(selectedGroup?.groupName || '');
 
-  // 🧠 Load user info for group members
+  // Load user info for group members
   
   useEffect(() => {
     if (selectedGroup?.members?.length) {
@@ -99,7 +99,7 @@ function GroupInfo({ groupInfo, setGroupInfo }) {
       await updateDoc(groupRef, {
         members: arrayRemove(memberId),
       });
-      // Optionally: update local state if needed
+      
     } catch (error) {
       console.error("Error removing member:", error);
     }
@@ -163,7 +163,7 @@ function GroupInfo({ groupInfo, setGroupInfo }) {
         </div>
       )}
 
-      {/* Modals for name/image/member changes */}
+      
       {editingGroupName && (
         <Modal title="Edit Group Name" onCancel={() => setEditingGroupName(false)} onSave={handleEditGroupName}>
           <input
@@ -206,7 +206,7 @@ function GroupInfo({ groupInfo, setGroupInfo }) {
   );
 }
 
-// Reusable modal component for editing sections
+
 function Modal({ title, children, onCancel, onSave }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

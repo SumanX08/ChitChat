@@ -4,7 +4,6 @@ import { collection, query, where, getDocs, onSnapshot, addDoc } from 'firebase/
 import { db } from '../config/firebase';
 import { AppContext } from '../context/AppContext';
 import { toast } from 'react-toastify';
-import { getAuth } from 'firebase/auth';
 import FriendsList from './FriendList';
 import GroupsList from './GroupList';
 import ShowMenu from './ShowMenu';
@@ -161,10 +160,13 @@ const Chats = () => {
   };
 
   return (
-    <div className={`w-full text-white bg-customBlack h-75vh lg:block ${isChatOpen ? "hidden" : "block"} lg:w-auto`}>
+    <div className={`w-full text-white bg-black h-75vh lg:block ${isChatOpen ? "hidden" : "block"} lg:w-auto`}>
       <div className='p-5'>
         <div className='flex items-center justify-between'>
-          <img className='w-32' src={assets.ChitChat} alt='' />
+          <div className='flex items-center gap-1'>
+              <img className='w-10' src={assets.logo_icon} alt='' />
+              <p className='text-xl'>ChitChat</p>
+          </div>
           <ShowMenu fetchGroup={setupGroupListener} fetchFriends={fetchFriends} />
         </div>
 

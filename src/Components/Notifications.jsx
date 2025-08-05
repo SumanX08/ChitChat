@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import assets from '../assets/assets';
 import { AppContext } from '../context/AppContext';
-import { collection, query, where, onSnapshot, getDoc, doc } from 'firebase/firestore';
+import { collection, query, where, onSnapshot,  } from 'firebase/firestore';
 import { db, requestHandler, acceptRequest } from '../config/firebase';
 
 const Notifications = ({ setShowNotifications, fetchFriends }) => {
@@ -34,7 +34,7 @@ const Notifications = ({ setShowNotifications, fetchFriends }) => {
 
       if (status === 'accepted') {
         await acceptRequest(requestId);
-        await fetchFriends(); // Refresh friends list after acceptance
+        await fetchFriends(); 
       }
     } catch (error) {
       console.error('Error handling request:', error);

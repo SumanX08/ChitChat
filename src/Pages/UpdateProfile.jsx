@@ -99,7 +99,7 @@ const UpdateProfile = () => {
   }, [navigate]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#3b82f6]">
       <div className="flex flex-col-reverse bg-white rounded-xl w-356px min-h-96 lg:flex-row lg:min-w-700px">
         <form onSubmit={profileUpdate} className="flex flex-col justify-end gap-5 p-5 lg:min-w-96 lg:p-10 lg:pr-0">
           <h2 className="text-2xl font-semibold text-customBlack">Profile Details</h2>

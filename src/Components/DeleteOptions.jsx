@@ -11,7 +11,6 @@ const DeleteOptions = ({
   deleteMessage,
   deleteMessageForEveryone,
   setShowDeleteOptions,
-  showDeleteOptions
 }) => {
   const [selectedMembers, setSelectedMembers] = useState([]);
   const { userData, membersInfo, loadGroupUsers } = useContext(AppContext);
@@ -68,7 +67,7 @@ const DeleteOptions = ({
       <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-lg">
         <p className="mb-4 text-lg font-semibold">Select an option:</p>
 
-        {/* Delete for Me — always available */}
+       
         <div className="flex items-center justify-between mb-2">
           <p className="w-1/2 px-4 py-2 mb-2 text-sm text-white rounded-lg bg-customBlue">
             Delete for Me
@@ -81,7 +80,7 @@ const DeleteOptions = ({
           />
         </div>
 
-        {/* Only sender sees "Delete for Everyone" and member list */}
+        
         {isSender && (
           <>
             <div className="flex items-center justify-between mb-2">

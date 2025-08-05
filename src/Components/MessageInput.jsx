@@ -12,6 +12,7 @@ const MessageInput = ({ input, setInput }) => {
 
   const sendMessage = async () => {
     const trimmedText = input.trim();
+    setInput('');
 
     if (!trimmedText) {
       alert("Cannot send an empty message.");
@@ -51,10 +52,10 @@ const MessageInput = ({ input, setInput }) => {
         lastMessageSender: userData.username,
         lastMessageAvatar: userData.avatar,
         updatedAt: serverTimestamp(),
-        messageSeen: false, // optional: see note in analysis
+        messageSeen: false,
       });
 
-      setInput('');
+
     } catch (error) {
       console.error('Error sending message:', error);
       alert("Failed to send message.");
@@ -69,7 +70,7 @@ const MessageInput = ({ input, setInput }) => {
 
     const fileType = file.type?.split('/')?.[0] || 'unknown';
 
-    // Validate file
+
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
       alert("File too large (max 10MB).");
@@ -112,6 +113,7 @@ const MessageInput = ({ input, setInput }) => {
         updatedAt: serverTimestamp(),
       });
 
+
       setInput('');
     } catch (error) {
       console.error('Error sending file:', error);
@@ -127,6 +129,12 @@ const MessageInput = ({ input, setInput }) => {
         ref={inputRef}
         className='flex-1 px-4 bg-transparent outline-none text-customBlack placeholder:text-textColor'
         onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        }}
         value={input}
         type="text"
         placeholder='Type a message'

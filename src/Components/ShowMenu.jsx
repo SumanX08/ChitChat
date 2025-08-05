@@ -42,7 +42,7 @@ const ShowMenu = ({ fetchFriends, fetchGroup }) => {
     <div className="flex items-center justify-between">
       <div className="relative">
         <img
-          className="cursor-pointer max-h-5 opacity-65"
+          className="cursor-pointer max-h-7 opacity-65"
           onClick={toggleShowMenu}
           src={assets.menu_icon}
           alt="menu"
