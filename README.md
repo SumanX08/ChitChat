@@ -2,7 +2,7 @@
 
 A modern real-time chat application built with **React**, **Firebase**, and **Tailwind CSS**. Talk with friends, join groups, share files, and enjoy a clean, responsive UI — all in one place.
 
-![ChitChat Preview](./path/to/demo-image.png) <!-- Replace with actual path or GitHub raw image URL -->
+ <!-- Replace with actual path or GitHub raw image URL -->
 
 ---
 
@@ -34,5 +34,5 @@ A modern real-time chat application built with **React**, **Firebase**, and **Ta
 
 ---
 
-## 📁 Project Structure
+
 
