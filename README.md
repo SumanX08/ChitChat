@@ -30,7 +30,7 @@ A modern real-time chat application built with **React**, **Firebase**, and **Ta
 ## 📸 Demo
 
 <!-- Replace this with a YouTube video link or animated gif -->
-[![Watch Video Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://youtube.com/YOUR_VIDEO_LINK)
+[![Watch Video Demo]](https://youtu.be/CD6BMKne2hA)
 
 ---
 
