@@ -75,7 +75,7 @@ const CreateGroup = ({ onClose, friends, fetchGroup }) => {
             onChange={(e) => setImage(e.target.files[0])}
             type="file"
             id='avatar'
-            accept='.png, .jpg, .jpeg'
+            accept='.png, .jpg, .jpeg, .webp'
             hidden
           />
           <label htmlFor='avatar'>

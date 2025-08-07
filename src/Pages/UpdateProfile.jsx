@@ -108,7 +108,7 @@ const UpdateProfile = () => {
             <input
               type="file"
               id="avatar"
-              accept=".png, .jpg, .jpeg"
+              accept=".png, .jpg, .jpeg ,.webp"
               hidden
               onChange={handleImageChange}
             />
