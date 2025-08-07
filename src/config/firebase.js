@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC4ErQp1x2Qt2VrFgbnMdFhFxjTbejZ9S4",
+  apiKey: "AIzaSyC4ErQp1x2Qt2VrFgbnMdFhFxjTbejZ9S",
   authDomain: "chat-app-45516.firebaseapp.com",
   projectId: "chat-app-45516",
   storageBucket: "chat-app-45516.appspot.com",
