@@ -9,7 +9,6 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  // State variables
   const [userData, setUserData] = useState(null);
   const [chatData, setChatData] = useState(null);
   const [messageId, setMessageId] = useState(null);
@@ -61,7 +60,7 @@ const AppContextProvider = ({ children }) => {
 
  const loadUserData = async (uid) => {
   try {
-    if (!uid) return; // ✅ now correctly checking for uid
+    if (!uid) return; 
 
     const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
@@ -70,17 +69,14 @@ const AppContextProvider = ({ children }) => {
       const userData = userSnap.data();
       setUserData(userData);
 
-      // Navigate based on profile completion
       if (userData.avatar && userData.name && userData.bio) {
         navigate("/chat");
       } else {
         navigate("/updateProfile");
       }
 
-      // Initial `lastSeen` update
       await updateDoc(userRef, { lastSeen: serverTimestamp() });
 
-      // Update `lastSeen` every 30 seconds
       const intervalId = setInterval(() => {
         const currentUser = auth.currentUser;
         if (currentUser && currentUser.uid === uid) {
