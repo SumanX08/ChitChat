@@ -39,7 +39,6 @@ const CreateGroup = ({ onClose, friends, fetchGroup }) => {
       await setDoc(groupDocRef, groupInfo);
       await setDoc(doc(collection(groupDocRef, 'messages')), { initialized: true });
 
-      // Begin image upload in background
       if (image) {
         upload(image)
           .then(async (url) => {
@@ -52,7 +51,7 @@ const CreateGroup = ({ onClose, friends, fetchGroup }) => {
       }
 
       alert('Group created successfully!');
-      onClose(); // Close modal immediately
+      onClose(); 
       fetchGroup(); 
     } catch (error) {
       console.error('Error creating group:', error);
