@@ -14,7 +14,6 @@ const Chat = ({ setShowNotifications }) => {
 
   const [isFriendOnline, setIsFriendOnline] = useState(false);
 
-  // Memoize frequently passed props
   const chatBoxProps = useMemo(() => ({
     isFriendOnline,
     setIsFriendOnline,
