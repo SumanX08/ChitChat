@@ -14,7 +14,7 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
   const [scheduleModal, setScheduleModal] = useState(false);
   const [scheduledText, setScheduledText] = useState('');
   const [scheduledTime, setScheduledTime] = useState('');
-  const [groupMembers, setGroupMembers] = useState([]); // State to hold selectedFriend member usernames
+  const [groupMembers, setGroupMembers] = useState([]); 
       const [input, setInput] = useState('');
   
   
@@ -23,7 +23,6 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
 
 
 
-  // Fetch selectedFriend members' usernames when the selectedFriend is available
   useEffect(() => {
     if (selectedFriend && selectedFriend.members) {
       
@@ -61,7 +60,6 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
 
 
 
-  // Check and set the friend's online status
   useEffect(() => {
     if (selectedFriend && selectedFriend.friend.id) {
       const friendDocRef = doc(db, 'users', selectedFriend.friend.id);
@@ -116,13 +114,11 @@ const ChatBox = ({  isFriendOnline, setIsFriendOnline, }) => {
   }
 };
   
-  // Toggle menu visibility
   const toggleMenu = () => {
     setMenuVisible((prev) => !prev);
   };
 
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       const menuElement = document.querySelector('.menu');
@@ -184,7 +180,6 @@ const handleScheduleMessage = async () => {
       scheduled: true,
     });
 
-    // Reset modal and input
     setScheduleModal(false);
     setScheduledText('');
     setScheduledTime('');
@@ -208,27 +203,22 @@ const handleScheduleMessage = async () => {
 
   return (
 <div className={`w-full overflow-y-scroll h-75vh scrollbar-hide bg-gray-200 lg:block ${isChatOpen && !isInfoOpen ? "block" : "hidden"}`}>
-  {/* Header Section */}
   <div className="relative flex items-center gap-3 px-3 py-2 bg-white border-b-2">
-    {/* Back Icon */}
     <div onClick={() => setIsChatOpen(false)} className="w-8 -mx-3 cursor-pointer">
       <img className="lg:hidden" src={assets.Back_icon} alt="Back Icon" />
     </div>
 
-    {/* Avatar */}
     <img
       className="rounded-full w-9 aspect-square"
       src={selectedFriend ? selectedFriend.friend.avatar : selectedGroup.groupImage}
       alt="Avatar"
     />
 
-    {/* Chat Title */}
     <p className="flex items-center flex-1 gap-1 text-xl font-medium text-center">
       {selectedFriend ? selectedFriend.friend.username : selectedGroup.groupName}
       <img src={selectedFriend && isFriendOnline ? assets.green_dot : ""} alt="" />
     </p>
 
-    {/* Help and Menu Icons */}
     <img
       src={assets.help_icon}
       onClick={() => {
@@ -245,7 +235,6 @@ const handleScheduleMessage = async () => {
       alt="Menu Icon"
     />
 
-    {/* Dropdown Menu */}
     {menuVisible && (
       <div
         className="absolute right-0 z-50 mt-2 text-sm bg-white border rounded shadow-lg top-full menu"
@@ -268,7 +257,6 @@ const handleScheduleMessage = async () => {
     )}
   </div>
 
-  {/* Schedule Modal */}
   {scheduleModal && (
     <div className="inset-0 items-center justify-center block bg-black bg-opacity-50 modal">
       <div className="p-6 bg-white rounded shadow-lg">
@@ -304,7 +292,6 @@ const handleScheduleMessage = async () => {
     </div>
   )}
 
-  {/* Messages Section */}
   <Messages selectedFriend={selectedFriend} messageId={messageId} />
   <MessageInput input={input} setInput={setInput} />
 </div>
